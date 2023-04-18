@@ -5,6 +5,7 @@ description = "Flask Blog"
 license = "MIT"
 authors = ["Marat-77"]
 readme = "README.md"
+repository = "https://github.com/Marat-77/flask_blog"
 packages = [{include = "flask_blog"}]
 
 [tool.poetry.dependencies]

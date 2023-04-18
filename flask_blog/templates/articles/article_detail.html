@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{{ article.article_title }}
+{% endblock title %}
+
+{% block content %}
+<h2>{{ article.article_title }}</h2>
+
+
+<p><a href="{{ url_for('user.user_detail', pk=article.article_author) }}">{{ users[article.article_author].last_name }} {{ users[article.article_author].first_name }}</a></p>
+
+<p>{{ article.article_text }}</p>
+{% endblock content %}
