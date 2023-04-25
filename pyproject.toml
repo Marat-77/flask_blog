@@ -11,6 +11,7 @@ packages = [{include = "flask_blog"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 flask = "^2.2.3"
+flask-sqlalchemy = "^3.0.3"
 
 
 [tool.poetry.group.dev.dependencies]
