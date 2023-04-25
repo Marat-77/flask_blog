@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      {% block title %}
+      Flask_blog -
+      {% endblock title %}
+    </title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon/favicon.ico') }}">
+    {% block css %}
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    {% endblock css %}
+  </head>
+  <body>
+    <div class="container">
+      {% include 'nav.html' %}
+      {% block content %}
+      <h1>Hello, world!</h1>
+      {% endblock content %}
+    </div>
+
+    {% block footer %}
+    <footer class="pt-4 my-md-5 pt-md-5 bg-secondary border-top">
+      <div>
+        <div>
+          <h5 class="text-center">Flask Blog. 2023</h5>
+        </div>
+      </div>
+    </footer>
+    {% endblock footer %}
+
+    {% block js %}
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    {% endblock js %}
+  </body>
+</html>
