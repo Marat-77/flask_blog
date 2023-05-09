@@ -1,4 +1,10 @@
+import os
+
 from flask import Flask
+from dotenv import load_dotenv
+
+from flask_blog.models.database import db
+from flask_blog.users.auth import login_manager, auth_app
 # from flask import request, __version__
 # from werkzeug.exceptions import NotFound
 
@@ -10,6 +16,12 @@ from flask_blog.error_handlers.err_handler import error_
 
 def create_app() -> Flask:
     app = Flask(__name__)
+    load_dotenv()
+    # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
+    app.config['SECRET_KEY'] = os.getenv('sk')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    register_extensions(app)
     register_blueprints(app)
     return app
 
@@ -19,6 +31,12 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(article)
     app.register_blueprint(index)
     app.register_blueprint(error_)
+    app.register_blueprint(auth_app, url_prefix="/auth")
+
+
+def register_extensions(app: Flask):
+    db.init_app(app)
+    login_manager.init_app(app)
 
 
 # app = Flask(__name__)
