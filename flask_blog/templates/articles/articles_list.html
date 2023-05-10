@@ -9,12 +9,9 @@
 <h1>Статьи:</h1>
 
 {% for article in articles %}
-{% set user_id = articles[article].article_author %}
 
 <div>
     <a href="{{ url_for('article.article_detail', pk=article) }}">{{ articles[article].article_title }}</a>
-    автор:
-    <a href="{{ url_for('user.user_detail', pk=user_id) }}">{{ users[user_id].last_name }} {{ users[user_id].first_name }}</a>
 </div>
 
 {% endfor %}
