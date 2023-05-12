@@ -1,6 +1,8 @@
 import os
 
 from flask import Flask
+from flask_migrate import Migrate
+
 # from dotenv import load_dotenv
 
 from flask_blog.models.database import db
@@ -16,8 +18,9 @@ from flask_blog.error_handlers.err_handler import error_
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    cfg_name = os.environ.get('CONFIG_NAME') or 'ProductionConfig'
+    # cfg_name = os.environ.get('CONFIG_NAME') or 'ProductionConfig'
     # cfg_name = os.environ.get('CONFIG_NAME')
+    cfg_name = 'DevConfig'
     app.config.from_object(f'flask_blog.config.{cfg_name}')
     # load_dotenv()
     # # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
@@ -40,6 +43,8 @@ def register_blueprints(app: Flask) -> None:
 
 def register_extensions(app: Flask):
     db.init_app(app)
+    migrate = Migrate()
+    migrate.init_app(app, db, compare_type=True)
     login_manager.init_app(app)
 
 
