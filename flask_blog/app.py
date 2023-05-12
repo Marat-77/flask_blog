@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 from flask_blog.models.database import db
 from flask_blog.users.auth import login_manager, auth_app
@@ -16,11 +16,15 @@ from flask_blog.error_handlers.err_handler import error_
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    load_dotenv()
-    # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
-    app.config['SECRET_KEY'] = os.getenv('sk')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    cfg_name = os.environ.get('CONFIG_NAME') or 'ProductionConfig'
+    # cfg_name = os.environ.get('CONFIG_NAME')
+    app.config.from_object(f'flask_blog.config.{cfg_name}')
+    # load_dotenv()
+    # # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
+    # app.config['SECRET_KEY'] = os.getenv('sk')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     register_extensions(app)
     register_blueprints(app)
     return app
