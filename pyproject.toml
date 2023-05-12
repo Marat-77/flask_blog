@@ -22,5 +22,6 @@ psycopg2-binary = "^2.9.6"
 pytest = "^7.3.1"
 
 [build-system]
-requires = ["poetry-core"]
+# requires = ["poetry-core"]
+requires = ["poetry-core>=1.4.2"]
 build-backend = "poetry.core.masonry.api"
