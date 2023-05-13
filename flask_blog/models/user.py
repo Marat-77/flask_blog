@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     is_staff = Column(Boolean, nullable=False, default=False)
     first_name = Column(String(155), nullable=True)
     last_name = Column(String(155), nullable=True)
+    email = Column(String(255), nullable=False, default="", server_default="")
 
     def __repr__(self):
         return f'<User #{self.id} {self.username}>'

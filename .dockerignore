@@ -1,0 +1,11 @@
+.idea/
+.git/
+.gitignore
+Dockerfile
+devDockerfile
+.dockerignore
+__pycache__/
+instance/
+poetry.lock/
+.dockerignore_example
+env_example

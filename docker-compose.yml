@@ -1,0 +1,27 @@
+services:
+
+  web:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    environment:
+      DATABASE_URL: postgresql://postgres:pass123wword@db:5432/db_blog
+      # DATABASE_URL=postgresql://user:pass@host:5432/db_name
+    ports:
+      - 8080:5000
+    depends_on:
+      - database
+
+  database:
+    image: postgres:14.8-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass123wword
+      POSTGRES_DB: db_blog
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:

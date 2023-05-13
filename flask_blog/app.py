@@ -1,7 +1,11 @@
 import os
 
 from flask import Flask
-from dotenv import load_dotenv
+
+from flask_migrate import Migrate
+
+# from dotenv import load_dotenv
+
 
 from flask_blog.models.database import db
 from flask_blog.users.auth import login_manager, auth_app
@@ -16,11 +20,37 @@ from flask_blog.error_handlers.err_handler import error_
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    load_dotenv()
-    # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
-    app.config['SECRET_KEY'] = os.getenv('sk')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # cfg_name = os.environ.get('CONFIG_NAME') or 'ProductionConfig'
+    # cfg_name = os.environ.get('CONFIG_NAME')
+    cfg_name = 'DevConfig'
+    app.config.from_object(f'flask_blog.config.{cfg_name}')
+
+    # app.static_folder
+    # print(app.static_folder)
+
+    # print('app.config:', app.config)
+    # app.config: < Config
+    # {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None,
+    #  'SECRET_KEY': 'BWdOngZKV-iKp3QJIc79_g',
+    #  'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31),
+    #  'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/',
+    #  'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None,
+    #  'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True,
+    #  'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None,
+    #  'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None,
+    #  'SEND_FILE_MAX_AGE_DEFAULT': None, 'TRAP_BAD_REQUEST_ERRORS': None,
+    #  'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': False,
+    #  'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': None,
+    #  'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///db.sqlite',
+    #  'SQLALCHEMY_TRACK_MODIFICATIONS': False} >
+
+    # load_dotenv()
+    # # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
+    # app.config['SECRET_KEY'] = os.getenv('sk')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     register_extensions(app)
     register_blueprints(app)
     return app
@@ -36,6 +66,8 @@ def register_blueprints(app: Flask) -> None:
 
 def register_extensions(app: Flask):
     db.init_app(app)
+    migrate = Migrate()
+    migrate.init_app(app, db, compare_type=True)
     login_manager.init_app(app)
 
 
