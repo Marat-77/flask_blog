@@ -11,6 +11,8 @@ class BaseConfig(object):
     SECRET_KEY = os.getenv('sk')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # static_folder = 'flask_blog/static'
+    static_folder = 'static'
 
 
 class DevConfig(BaseConfig):

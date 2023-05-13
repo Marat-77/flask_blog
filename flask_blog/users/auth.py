@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, url_for, request, render_template
 from flask_login import LoginManager, login_user, login_required, logout_user
+from sqlalchemy.exc import OperationalError
 
 from flask_blog.models import User
 
@@ -21,7 +22,7 @@ def unauthorized():
 
 @auth_app.route('/login/', methods=['GET', 'POST'], endpoint='login')
 def login():
-    print()
+    # print()
     if request.method == 'GET':
         return render_template('auth/login.html')
 
@@ -29,12 +30,23 @@ def login():
     if not username:
         return render_template('auth/login.html', error='username not passed')
 
-    user = User.query.filter_by(username=username).one_or_none()
+    try:
+        user = User.query.filter_by(username=username).one_or_none()
+    except OperationalError:
+        user = None
+
     if user is None:
         return render_template('auth/login.html',
                                error=f'user {username} not found')
     login_user(user)
     return redirect(url_for('index.index_'))
+
+    # user = User.query.filter_by(username=username).one_or_none()
+    # if user is None:
+    #     return render_template('auth/login.html',
+    #                            error=f'user {username} not found')
+    # login_user(user)
+    # return redirect(url_for('index.index_'))
 
 
 @auth_app.route('/logout/', endpoint='logout')
@@ -44,6 +56,7 @@ def logout():
     return redirect(url_for('index.index_'))
 
 
+# http://127.0.0.1:8080/auth/secret/
 @auth_app.route('/secret/')
 @login_required
 def secret_view():

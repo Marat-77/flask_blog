@@ -22,6 +22,26 @@ def create_app() -> Flask:
     # cfg_name = os.environ.get('CONFIG_NAME')
     cfg_name = 'DevConfig'
     app.config.from_object(f'flask_blog.config.{cfg_name}')
+
+    # app.static_folder
+    # print(app.static_folder)
+
+    # print('app.config:', app.config)
+    # app.config: < Config
+    # {'DEBUG': True, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None,
+    #  'SECRET_KEY': 'BWdOngZKV-iKp3QJIc79_g',
+    #  'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31),
+    #  'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/',
+    #  'SESSION_COOKIE_NAME': 'session', 'SESSION_COOKIE_DOMAIN': None,
+    #  'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True,
+    #  'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None,
+    #  'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None,
+    #  'SEND_FILE_MAX_AGE_DEFAULT': None, 'TRAP_BAD_REQUEST_ERRORS': None,
+    #  'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': False,
+    #  'PREFERRED_URL_SCHEME': 'http', 'TEMPLATES_AUTO_RELOAD': None,
+    #  'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///db.sqlite',
+    #  'SQLALCHEMY_TRACK_MODIFICATIONS': False} >
+
     # load_dotenv()
     # # app.config['SECRET_KEY'] = 'BWdOngZKV-iKp3QJIc79_g'
     # app.config['SECRET_KEY'] = os.getenv('sk')

@@ -25,5 +25,8 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 RUN poetry install
 # указать порт 5000 для прослушивания:
 EXPOSE 5000
+#
+RUN python -m flask init-db
+RUN python -m flask create-users
 # команда для запуска flask-приложения при старте контейнера:
 CMD ["python3", "-m" , "flask", "run", "--host=0.0.0.0"]
