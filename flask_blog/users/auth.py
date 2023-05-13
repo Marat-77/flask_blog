@@ -49,11 +49,13 @@ def login():
     # return redirect(url_for('index.index_'))
 
 
+
 @auth_app.route('/logout/', endpoint='logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index.index_'))
+
 
 
 # http://127.0.0.1:8080/auth/secret/

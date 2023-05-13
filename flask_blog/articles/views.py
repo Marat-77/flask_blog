@@ -37,8 +37,11 @@ def articles_list():
     #                        )
 
 
+
 @article.route('/<int:pk>/')
 def article_detail(pk: int):
+    users = User.query.all()
+    # user = User.query.filter_by(id=pk).one_or_none()
     if pk in ARTICLES:
         try:
             user = User.query.filter_by(

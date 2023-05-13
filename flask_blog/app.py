@@ -1,9 +1,11 @@
 import os
 
 from flask import Flask
+
 from flask_migrate import Migrate
 
 # from dotenv import load_dotenv
+
 
 from flask_blog.models.database import db
 from flask_blog.users.auth import login_manager, auth_app
@@ -18,6 +20,7 @@ from flask_blog.error_handlers.err_handler import error_
 
 def create_app() -> Flask:
     app = Flask(__name__)
+
     # cfg_name = os.environ.get('CONFIG_NAME') or 'ProductionConfig'
     # cfg_name = os.environ.get('CONFIG_NAME')
     cfg_name = 'DevConfig'
