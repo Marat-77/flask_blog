@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% from "macro/formmacros.html" import render_field %}
+
+{% block title %}
+{{ super() }}
+Регистрация
+{% endblock title %}
+
+{% block content %}
+
+<h1>Регистрация</h1>
+
+{% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+{% endif %}
+
+<form method="POST">
+    {# csrf protection #}
+    {{ form.csrf_token }}
+
+    {% for field in ['username', 'first_name', 'last_name', 'email', 'password', 'password_confirm'] %}
+        {{ render_field(form[field]) }}
+    {% endfor %}
+
+    <div>
+        {{ form.submit(class="btn btn-primary btn-lg") }}
+    </div>
+</form>
+
+{% endblock content %}

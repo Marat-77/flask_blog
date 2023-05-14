@@ -18,9 +18,9 @@ class UserForm(FlaskForm):
 class RegistrationForm(UserForm):
     password = PasswordField(
         'Пароль',
-        DataRequired(),
-        EqualTo('password_confirm',
-                message='Пароль должен совпадать с подтверждением')
+        [DataRequired(),
+         EqualTo('password_confirm',
+                 message='Пароль должен совпадать с подтверждением')]
     )
     password_confirm = PasswordField('Подтверждение пароля')
     submit = SubmitField('Зарегистрироваться')
@@ -31,6 +31,6 @@ class LoginForm(FlaskForm):
                                         Length(max=155)])
     password = PasswordField(
         'Пароль',
-        DataRequired()
+        [DataRequired()]
     )
     submit = SubmitField('Войти')
