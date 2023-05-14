@@ -13,6 +13,7 @@ class BaseConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # static_folder = 'flask_blog/static'
     static_folder = 'static'
+    WTF_CSRF_ENABLED = True
 
 
 class DevConfig(BaseConfig):
