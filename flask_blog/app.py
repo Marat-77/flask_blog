@@ -8,6 +8,7 @@ from flask_migrate import Migrate
 
 
 from flask_blog.models.database import db
+from flask_blog.security import blog_bcrypt
 from flask_blog.users.auth import login_manager, auth_app
 # from flask import request, __version__
 # from werkzeug.exceptions import NotFound
@@ -22,8 +23,9 @@ def create_app() -> Flask:
     app = Flask(__name__)
 
     # cfg_name = os.environ.get('CONFIG_NAME') or 'ProductionConfig'
-    # cfg_name = os.environ.get('CONFIG_NAME')
-    cfg_name = 'DevConfig'
+    cfg_name = os.environ.get('CONFIG_NAME', 'DevConfig')
+    print(cfg_name)
+    # cfg_name = 'DevConfig'
     app.config.from_object(f'flask_blog.config.{cfg_name}')
 
     # app.static_folder
@@ -69,6 +71,7 @@ def register_extensions(app: Flask):
     migrate = Migrate()
     migrate.init_app(app, db, compare_type=True)
     login_manager.init_app(app)
+    blog_bcrypt.init_app(app)
 
 
 # app = Flask(__name__)

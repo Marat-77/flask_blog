@@ -5,7 +5,9 @@ services:
       dockerfile: ./Dockerfile
       context: .
     environment:
-      DATABASE_URL: postgresql://postgres:pass123wword@db:5432/db_blog
+      # CONFIG_NAME: DevConfig
+      CONFIG_NAME: ProductionConfig
+      DATABASE_URL: postgresql://postgres:pass123wword@database:5432/db_blog
       # DATABASE_URL=postgresql://user:pass@host:5432/db_name
     ports:
       - 8080:5000
