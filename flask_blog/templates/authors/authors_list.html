@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+Список авторов
+{% endblock title %}
+
+{% block content %}
+<h1>Список авторов:</h1>
+<ul>
+    {% for author in authors %}
+    <li>
+    <a href="{{ url_for('user.user_detail', pk=author.user.id) }}">{{ author.user.username }}.
+        {% if author.user.last_name%}
+            {{ author.user.last_name }}
+        {% endif %}
+        {% if author.user.last_name%}
+            {{ author.user.first_name }}
+        {% endif %}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}

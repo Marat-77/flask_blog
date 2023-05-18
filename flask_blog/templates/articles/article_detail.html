@@ -2,20 +2,25 @@
 
 {% block title %}
 {{ super() }}
-{{ article.article_title }}
+{{ article.title }}
 {% endblock title %}
 
 {% block content %}
-<h2>{{ article.article_title }}</h2>
+<h2>{{ article.title }}</h2>
+<p>{{ article.updated_at }}</p>
 
-{% if user %}
-<p><a href="{{ url_for('user.user_detail', pk=user.id) }}">{{ user.username }}.
-        {% if user.last_name%}
-            {{ user.last_name }}
+
+<p>Author: {{ article.author.user.username }}</p>
+
+
+<p><a href="{{ url_for('user.user_detail', pk=article.author.user.id) }}">{{ article.author.user.username }}.
+        {% if article.author.user.last_name%}
+            {{ article.author.user.last_name }}
         {% endif %}
-        {% if user.last_name%}
-            {{ user.first_name }}
+        {% if article.author.user.last_name%}
+            {{ article.author.user.first_name }}
         {% endif %}</a></p>
-{% endif %}
+
 <p>{{ article.article_text }}</p>
+
 {% endblock content %}

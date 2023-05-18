@@ -1,9 +1,13 @@
-from flask import Blueprint, render_template
-from sqlalchemy.exc import OperationalError
+from flask import Blueprint, render_template, request, redirect, url_for
+from flask_login import current_user, login_required
+from sqlalchemy.exc import OperationalError, IntegrityError
 from werkzeug.exceptions import NotFound
 
-from flask_blog.models import User
+from flask_blog.forms.article import CreateArticleForm
+from flask_blog.models import User, Article, Author
 from flask_blog.articles.mock_articles import ARTICLES
+from flask_blog.models.database import db
+
 # from flask_blog.users.mock_users import USERS
 
 article = Blueprint('article',
@@ -24,10 +28,13 @@ def articles_list():
         #                        )
     except OperationalError:
         users = None
+    try:
+        articles = Article.query.all()
+    except OperationalError:
+        articles = None
     return render_template('articles/articles_list.html',
-                           articles=ARTICLES,
+                           articles=articles,
                            users=users,
-                           # users=USERS
                            )
     # users = User.query.all()
     # return render_template('articles/articles_list.html',
@@ -37,22 +44,68 @@ def articles_list():
     #                        )
 
 
+@article.route('/article_create/', methods=('GET', 'POST'))
+@login_required
+def article_create():
+    error = None
+    form = CreateArticleForm(request.form)
+    if request.method == 'POST' and form.validate_on_submit():
+        article_ = Article(title=form.title.data.strip(),
+                           article_text=form.article_text.data)
+        db.session.add(article_)
+        if current_user.author:
+            article_.author = current_user.author
+        else:
+            author = Author(user_id=current_user.id)
+            db.session.add(author)
+            db.session.flush()
+            article_.author = current_user.author
+        try:
+            db.session.commit()
+        except IntegrityError:
+            error = 'ОШИБКА: статья не создана'
+        else:
+            return redirect(url_for('article.article_detail',
+                                    pk=article_.id))
+    return render_template('articles/article_create.html',
+                           form=form, error=error)
+
 
 @article.route('/<int:pk>/')
 def article_detail(pk: int):
-    users = User.query.all()
-    # user = User.query.filter_by(id=pk).one_or_none()
-    if pk in ARTICLES:
-        try:
-            user = User.query.filter_by(
-                id=ARTICLES[pk]['article_author']
-            ).one_or_none()
-        except OperationalError:
-            user = None
-        return render_template('articles/article_detail.html',
-                               user=user,
-                               article=ARTICLES[pk])
-    raise NotFound
+    article_ = Article.query.filter_by(
+        id=pk
+    ).one_or_none()
+    if article_ is None:
+        raise NotFound
+    try:
+        author = User.query.filter_by(
+            id=article_.author_id
+        ).one_or_none()
+        # user = User.query.filter_by(
+        #     id=article_.author_id
+        # ).one_or_none()
+    except OperationalError:
+        # user = None
+        author = None
+    return render_template('articles/article_detail.html',
+                           # user=user,
+                           # author=author,
+                           article=article_)
+    # # -----------------------------------
+    # # users = User.query.all()
+    # # user = User.query.filter_by(id=pk).one_or_none()
+    # if pk in ARTICLES:
+    #     try:
+    #         user = User.query.filter_by(
+    #             id=ARTICLES[pk]['article_author']
+    #         ).one_or_none()
+    #     except OperationalError:
+    #         user = None
+    #     return render_template('articles/article_detail.html',
+    #                            user=user,
+    #                            article=ARTICLES[pk])
+    # raise NotFound
 
     # try:
     #     users = User.query.all()
