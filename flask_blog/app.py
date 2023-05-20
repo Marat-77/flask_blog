@@ -13,8 +13,9 @@ from flask_blog.users.auth import login_manager, auth_app
 # from flask import request, __version__
 # from werkzeug.exceptions import NotFound
 
-from flask_blog.users.views import user
 from flask_blog.articles.views import article
+from flask_blog.authors.views import author
+from flask_blog.users.views import user
 from flask_blog.index.views import index
 from flask_blog.error_handlers.err_handler import error_
 
@@ -64,6 +65,7 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(index)
     app.register_blueprint(error_)
     app.register_blueprint(auth_app, url_prefix="/auth")
+    app.register_blueprint(author)
 
 
 def register_extensions(app: Flask):

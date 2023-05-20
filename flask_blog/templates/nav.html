@@ -7,6 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-link" href="{{ url_for('user.users_list') }}">Пользователи</a>
+        <a class="nav-link" href="{{ url_for('author.authors_list') }}">Авторы</a>
         <a class="nav-link" href="{{ url_for('article.articles_list') }}">Статьи</a>
         {% if current_user.is_authenticated %}
           <a></a>

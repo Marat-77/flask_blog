@@ -42,11 +42,20 @@ def user_detail(pk: int):
             full_name += f'{user_.last_name}'
         if user_.first_name:
             full_name += f'{user_.first_name}'
-        articles_id = user_articles(pk)
+        print('user_.author:', user_.author)
+        # user_.author: None
+        # user_.author: <Author 1>
+        articles = []
+        if user_.author:
+            print('user_.author.article:', user_.author.article)
+            # user_.author.article: [<Article 1>, <Article 2>]
+            articles = user_.author.article
+        # articles_id = user_articles(pk)
+
         return render_template('users/user_detail.html',
                                full_name=full_name,
-                               articles_id=articles_id,
-                               articles=ARTICLES)
+                               # articles_id=articles_id,
+                               articles=articles)
     except OperationalError:
         raise NotFound
     # user_ = User.query.filter_by(id=pk).one_or_none()
