@@ -23,4 +23,10 @@
 
 <p>{{ article.article_text }}</p>
 
+{% if article.tags %}
+    {% for tag in article.tags %}
+        <p><span class="badge bg-secondary">{{ tag.tag_name }}</span></p>
+    {% endfor %}
+{% endif %}
+
 {% endblock content %}
