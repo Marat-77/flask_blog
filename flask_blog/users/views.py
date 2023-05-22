@@ -42,12 +42,12 @@ def user_detail(pk: int):
             full_name += f'{user_.last_name}'
         if user_.first_name:
             full_name += f'{user_.first_name}'
-        print('user_.author:', user_.author)
+        # print('user_.author:', user_.author)
         # user_.author: None
         # user_.author: <Author 1>
         articles = []
         if user_.author:
-            print('user_.author.article:', user_.author.article)
+            # print('user_.author.article:', user_.author.article)
             # user_.author.article: [<Article 1>, <Article 2>]
             articles = user_.author.article
         # articles_id = user_articles(pk)

@@ -1,9 +1,10 @@
 import os
 
+import click
+
 from flask_blog.app import create_app
 from flask_blog.models.database import db
-from flask_blog.models import User
-
+from flask_blog.models import User, Tag
 
 app = create_app()
 
@@ -42,3 +43,18 @@ def create_users():
     db.session.commit()
     # print()
     print("done! Созданы пользователи:", user1, user2)
+
+
+@app.cli.command('create-tags')
+def create_tags():
+    tags_ = ('python',
+             'flask',
+             'django',
+             'fastapi',
+             'sqlalchemy',
+             'docker',)
+    for tag_ in tags_:
+        db.session.add(Tag(tag_name=tag_))
+    db.session.commit()
+    print(f'Теги {", ".join(tags_)} созданы')
+    click.echo(f'Теги {", ".join(tags_)} созданы')

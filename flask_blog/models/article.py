@@ -4,6 +4,7 @@ from sqlalchemy import Column, Integer, ForeignKey, String, Text, DateTime, \
     func
 from sqlalchemy.orm import relationship
 
+from flask_blog.models.article_tag import article_tag_associated_table
 from flask_blog.models.database import db
 
 
@@ -18,4 +19,7 @@ class Article(db.Model):
                         onupdate=datetime.utcnow)
 
     author = relationship('Author', back_populates='article')
+    tags = relationship('Tag',
+                        secondary=article_tag_associated_table,
+                        back_populates='articles')
 # datetime.utcnow()

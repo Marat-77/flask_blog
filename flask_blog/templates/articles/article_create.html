@@ -21,7 +21,7 @@
     {# csrf protection #}
     {{ form.csrf_token }}
 
-    {% for field in ['title', 'article_text'] %}
+    {% for field in ['title', 'article_text', 'tags'] %}
         {{ render_field(form[field]) }}
     {% endfor %}
 
