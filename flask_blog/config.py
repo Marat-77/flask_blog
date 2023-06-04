@@ -14,6 +14,7 @@ class BaseConfig(object):
     # static_folder = 'flask_blog/static'
     static_folder = 'static'
     WTF_CSRF_ENABLED = True
+    FLASK_ADMIN_SWATCH = 'cosmo'
 
 
 class DevConfig(BaseConfig):
