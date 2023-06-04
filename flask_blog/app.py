@@ -1,9 +1,11 @@
 import os
 
 from flask import Flask
+from flask_admin import Admin
 
 from flask_migrate import Migrate
 
+from flask_blog.admin import CustomAdminIndexView
 # from dotenv import load_dotenv
 
 
@@ -74,6 +76,9 @@ def register_extensions(app: Flask):
     migrate.init_app(app, db, compare_type=True)
     login_manager.init_app(app)
     blog_bcrypt.init_app(app)
+    admin = Admin(index_view=CustomAdminIndexView(), name='Blog_Admin',
+                  template_mode='bootstrap4')
+    admin.init_app(app)
 
 
 # app = Flask(__name__)
