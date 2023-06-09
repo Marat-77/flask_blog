@@ -40,11 +40,31 @@ class UsersAPI(Resource):
         return User.query.all()
 
 
+@ns.route('/users/<int:id>')
+class UserAPI(Resource):
+    @ns.marshal_with(user_schema)
+    def get(self, id):
+        return User.query.get(id)
+
 @ns.route('/authors')
 class AuthorsAPI(Resource):
     @ns.marshal_list_with(author_schema)
     def get(self):
         return Author.query.all()
+
+
+@ns.route('/authors/<int:id>')
+class AuthorAPI(Resource):
+    @ns.marshal_with(author_schema)
+    def get(self, id):
+        return Author.query.get(id)
+
+
+@ns.route('/articles/count')
+class Hello(Resource):
+    def get(self):
+        # articles_count = Article.query.count()
+        return {"articles count": Article.query.count()}
 
 
 @ns.route('/articles')
@@ -54,7 +74,15 @@ class ArticlesAPI(Resource):
         return Article.query.all()
 
 
-@ns.route('/hello')
-class Hello(Resource):
-    def get(self):
-        return {"hello": "restx"}
+@ns.route('/articles/<int:pk>')
+class ArticleAPI(Resource):
+    @ns.marshal_with(article_schema)
+    def get(self, pk):
+        article = Article.query.get(pk)
+        # print(f'Article {pk}:', article, article is None)
+        if article is None:
+            # print(f'Article {pk} -', article is None)
+            return {"message": "Not found"}, 404
+        return article, 200
+
+
