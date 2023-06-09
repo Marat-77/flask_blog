@@ -39,3 +39,11 @@ $ flask init-db
 ```commandline
 $ flask create-users
 ```
+
+---
+
+Для запуска API:
+
+```commandline
+$ run_api.py
+```
