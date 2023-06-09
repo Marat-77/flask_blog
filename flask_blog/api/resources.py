@@ -1,9 +1,17 @@
+from flask_jwt_extended import jwt_required
 from flask_restx import Namespace, Resource
 
 from flask_blog.api.schemas import user_schema, author_schema, article_schema
 from flask_blog.models import User, Author, Article
 
-ns = Namespace("api")
+authorizations = {
+    'jsonWebToken': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'Authorization'
+    }
+}
+ns = Namespace("api", authorizations=authorizations)
 
 
 @ns.route('/')
@@ -35,6 +43,9 @@ class IndexApi(Resource):
 
 @ns.route('/users')
 class UsersAPI(Resource):
+    method_decorators = [jwt_required()]
+
+    @ns.doc(security='jsonWebToken')
     @ns.marshal_list_with(user_schema)
     def get(self):
         return User.query.all()
@@ -45,6 +56,7 @@ class UserAPI(Resource):
     @ns.marshal_with(user_schema)
     def get(self, id):
         return User.query.get(id)
+
 
 @ns.route('/authors')
 class AuthorsAPI(Resource):
@@ -84,5 +96,3 @@ class ArticleAPI(Resource):
             # print(f'Article {pk} -', article is None)
             return {"message": "Not found"}, 404
         return article, 200
-
-
