@@ -20,3 +20,16 @@ article_schema = api.model('Article', {
     'article_text': fields.String,
     'author': fields.Nested(author_schema)
 })
+
+register_schema = api.model('LoginModel', {
+    'username': fields.String,
+    'first_name': fields.String,
+    'last_name': fields.String,
+    'email': fields.String,
+    'password': fields.String
+})
+
+login_schema = api.model('LoginModel', {
+    'username': fields.String,
+    'password': fields.String
+})
