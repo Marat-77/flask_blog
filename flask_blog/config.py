@@ -15,6 +15,7 @@ class BaseConfig(object):
     static_folder = 'static'
     WTF_CSRF_ENABLED = True
     FLASK_ADMIN_SWATCH = 'cosmo'
+    JWT_SECRET_KEY = os.getenv('api_sk')
 
 
 class DevConfig(BaseConfig):
