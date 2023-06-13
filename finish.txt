@@ -1,3 +1,4 @@
 
 Адрес развернутого на сервере приложения:
-<тут будет адрес>
+https://bbat5f38bqgvaag374d3.containers.yandexcloud.net/
+
