@@ -1,0 +1,7 @@
+.git
+.dockerignore
+.idea
+Dockerfile
+**/__pycache__/
+.env
+instance

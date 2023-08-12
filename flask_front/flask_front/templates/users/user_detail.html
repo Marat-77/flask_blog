@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{{ full_name }}
+{% endblock title %}
+
+{% block content %}
+
+<h2>
+  {{ user.username }}.
+  {% if user.last_name%}
+    {{ user.last_name }}
+  {% endif %}
+  {% if user.first_name%}
+    {{ user.first_name }}.
+  {% endif %}
+</h2>
+
+  {% if not current_user.is_anonymous and current_user.username == user.username %}
+    <p>username: {{ user.username }}</p>
+    <p>Имя: {{ user.first_name }}</p>
+    <p>Фамилия: {{ user.last_name }}</p>
+    <p>email: {{ user.email }}</p>
+  {% endif %}
+<p></p>
+
+<hr>
+<p>Статьи пользователя:</p>
+{% if user.author.article %}
+<ul>
+{% for article in user.author.article %}
+  <li>
+  <a href="{{ url_for('article.article_detail', pk=article.id) }}">{{ article.title }}</a>
+  </li>
+{% endfor %}
+</ul>
+{% else %}
+у пользователя нет статей
+{% endif %}
+
+
+{% endblock content %}

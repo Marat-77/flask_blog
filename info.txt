@@ -1,3 +1,0 @@
-Flask-COMBO-JSONAPI не работает с Flask>2.0.0
-Because no versions of flask-combo-jsonapi match >1.1.0,<2.0.0
- and flask-combo-jsonapi (1.1.0) depends on Flask (>=1.0.1,<2), flask-combo-jsonapi (>=1.1.0,<2.0.0) requires Flask (>=1.0.1,<2).

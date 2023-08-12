@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "flask-front"
+version = "0.1.0"
+description = "Flask Blog frontend"
+license = "MIT"
+authors = ["Marat-77"]
+readme = "README.md"
+repository = "https://github.com/Marat-77/flask_blog"
+packages = [{include = "flask_front"}]
+
+[tool.poetry.dependencies]
+python = "~3.9"
+flask = "^2.3.2"
+flask-login = "^0.6.2"
+gunicorn = "^20.1.0"
+requests = "^2.31.0"
+flask-wtf = "^1.1.1"
+email-validator = "^2.0.0.post2"
+python-dotenv = "^1.0.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
