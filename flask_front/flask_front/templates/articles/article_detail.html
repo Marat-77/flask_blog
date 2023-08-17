@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{{ article.title }}
+{% endblock title %}
+
+{% block content %}
+<h2>{{ article.title }}</h2>
+
+<p class="text-muted"><small>{{ article.updated_at }}</small></p>
+
+<p>Author: <a href="{{ url_for('user.user_detail', pk=article.author.user.id) }}">{{ article.author.user.username }}.
+        {% if article.author.user.last_name%}
+            {{ article.author.user.last_name }}
+        {% endif %}
+        {% if article.author.user.first_name%}
+            {{ article.author.user.first_name }}
+        {% endif %}</a></p>
+
+<p>{{ article.article_text }}</p>
+
+{% if article.tags %}
+    {% for tag in article.tags %}
+        <p><span class="badge bg-secondary">{{ tag.tag_name }}</span></p>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}
